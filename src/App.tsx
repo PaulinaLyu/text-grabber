@@ -1,11 +1,12 @@
-import { Test } from '@/test/Test';
+import { Header } from '@/Header';
 
 function App() {
   return (
-    <>
-      <div>React TS Vite Template</div>
-      <Test />
-    </>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+      <div className="max-w-7xl mx-auto p-6">
+        <Header />
+      </div>
+    </div>
   );
 }
 
