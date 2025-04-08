@@ -4,10 +4,10 @@ export interface ImageSlice {
   imageUrl: string;
   editableText: string;
   isProcessing: boolean;
-  isDeleting: boolean;
+  // isDeleting: boolean;
   setImageUrl: (url: string) => void;
   setIsProcessing: (isProcessing: boolean) => void;
-  setIsDeleting: (isDeleting: boolean) => void;
+  // setIsDeleting: (isDeleting: boolean) => void;
   processImage: () => void;
   handleDeleteImage: () => void;
 }
@@ -20,7 +20,7 @@ export const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
 
   setImageUrl: url => set({ imageUrl: url }),
   setIsProcessing: isProcessing => set({ isProcessing }),
-  setIsDeleting: isDeleting => set({ isDeleting }),
+  // setIsDeleting: isDeleting => set({ isDeleting }),
 
   processImage: async () => {
     set({ isProcessing: true });
@@ -29,7 +29,7 @@ export const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
   },
 
   handleDeleteImage: () => {
-    set({ isDeleting: true });
+    // set({ isDeleting: true });
     setTimeout(() => {
       const { imageUrl } = get();
       if (imageUrl) {
@@ -38,7 +38,7 @@ export const createImageSlice: StateCreator<ImageSlice> = (set, get) => ({
       set({
         imageUrl: '',
         editableText: '',
-        isDeleting: false,
+        // isDeleting: false,
       });
     }, 300);
   },

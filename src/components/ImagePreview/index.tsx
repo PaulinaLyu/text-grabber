@@ -1,5 +1,6 @@
 import { Loader2, Trash2 } from 'lucide-react';
 import { ImageUploader } from '../ImageUploader';
+import { Button } from '../Button';
 
 interface ImagePreviewProps {
   imageUrl: string;
@@ -13,12 +14,9 @@ export const ImagePreview = ({ imageUrl, isProcessing, onDelete, onUpload }: Ima
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 h-full flex flex-col transition-transform duration-300 hover:shadow-md">
       <div className="flex justify-between items-start mb-4">
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Загруженное изображение</h2>
-        <button
-          onClick={onDelete}
-          className="inline-flex items-center px-3 py-2 text-sm font-medium text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-900/30 rounded-md hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors duration-200 hover:scale-105">
-          <Trash2 className="w-4 h-4 mr-2" />
+        <Button onClick={onDelete} variant="danger" icon={Trash2}>
           Удалить
-        </button>
+        </Button>
       </div>
       <div className="flex-1 flex flex-col lg:flex-row gap-4">
         <div className="flex-1">

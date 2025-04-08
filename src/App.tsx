@@ -1,8 +1,28 @@
-import { Header, ImagePreview, ImageUploader } from '@/components';
+import { Header, ImagePreview, ImageUploader, TextEditor } from '@/components';
 import { useImageProcessing } from './hooks/useImageProcessing';
+import { useCallback } from 'react';
+import { useStore } from '@/store/useStore';
 
 function App() {
   const { imageUrl, isProcessing, isDeleting, handleImageUpload, handleDeleteImage } = useImageProcessing();
+  const {
+    extractedText,
+    editableText,
+    isEditing,
+    handleEdit,
+    handleSave,
+    handleCancel,
+    setEditableText,
+    saveAsPDF,
+    saveAsWord,
+  } = useStore();
+
+  const handleTextChange = useCallback(
+    (text: string) => {
+      setEditableText(text);
+    },
+    [setEditableText],
+  );
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
@@ -20,6 +40,19 @@ function App() {
               onUpload={handleImageUpload}
             />
           </div>
+        )}
+        {extractedText && (
+          <TextEditor
+            text={extractedText}
+            editableText={editableText}
+            isEditing={isEditing}
+            onEdit={handleEdit}
+            onSave={handleSave}
+            onCancel={handleCancel}
+            onEditableTextChange={handleTextChange}
+            onSaveAsPDF={saveAsPDF}
+            onSaveAsWord={saveAsWord}
+          />
         )}
       </div>
     </div>
