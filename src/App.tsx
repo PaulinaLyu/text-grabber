@@ -4,24 +4,14 @@ import { useCallback } from 'react';
 import { useStore } from '@/store/useStore';
 
 function App() {
-  const { imageUrl, isProcessing, isDeleting, handleImageUpload, handleDeleteImage } = useImageProcessing();
-  const {
-    extractedText,
-    editableText,
-    isEditing,
-    handleEdit,
-    handleSave,
-    handleCancel,
-    setEditableText,
-    saveAsPDF,
-    saveAsWord,
-  } = useStore();
+  const { imageUrl, isProcessing, uploadImage, deleteImage } = useImageProcessing();
+  const { extractedText, saveAsPDF, saveAsWord, setExtractedText } = useStore();
 
   const handleTextChange = useCallback(
     (text: string) => {
-      setEditableText(text);
+      setExtractedText(text);
     },
-    [setEditableText],
+    [setExtractedText],
   );
 
   return (
@@ -29,26 +19,20 @@ function App() {
       <div className="max-w-7xl mx-auto p-6">
         <Header />
         {!imageUrl ? (
-          <ImageUploader onUpload={handleImageUpload} fullScreen />
+          <ImageUploader onUpload={uploadImage} fullScreen />
         ) : (
-          <div
-            className={`grid grid-cols-1 lg:grid-cols-2 gap-6 transition-opacity duration-300 ${isDeleting ? 'opacity-0' : 'opacity-100'}`}>
+          <div className={`grid grid-cols-1 lg:grid-cols-2 gap-6 transition-opacity duration-300`}>
             <ImagePreview
               imageUrl={imageUrl}
               isProcessing={isProcessing}
-              onDelete={handleDeleteImage}
-              onUpload={handleImageUpload}
+              onDelete={deleteImage}
+              onUpload={uploadImage}
             />
           </div>
         )}
         {extractedText && (
           <TextEditor
             text={extractedText}
-            editableText={editableText}
-            isEditing={isEditing}
-            onEdit={handleEdit}
-            onSave={handleSave}
-            onCancel={handleCancel}
             onEditableTextChange={handleTextChange}
             onSaveAsPDF={saveAsPDF}
             onSaveAsWord={saveAsWord}

@@ -4,28 +4,14 @@ import { Button } from '../Button';
 
 interface TextEditorProps {
   text: string;
-  editableText: string;
-  isEditing: boolean;
-  onEdit: () => void;
-  onSave: () => void;
-  onCancel: () => void;
   onEditableTextChange: (text: string) => void;
   onSaveAsPDF: () => void;
   onSaveAsWord: () => void;
 }
 
-export function TextEditor({
-  text,
-  editableText,
-  isEditing,
-  onEdit,
-  onSave,
-  onCancel,
-  onEditableTextChange,
-  onSaveAsPDF,
-  onSaveAsWord,
-}: TextEditorProps) {
+export function TextEditor({ text, onEditableTextChange, onSaveAsPDF, onSaveAsWord }: TextEditorProps) {
   const [isCopied, setIsCopied] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleCopy = async () => {
     try {
@@ -35,6 +21,18 @@ export function TextEditor({
     } catch (err) {
       console.error('Ошибка при попытке скопировать в буфер обмена:', err);
     }
+  };
+
+  const handleSave = () => {
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
+  const handleEditingStart = () => {
+    setIsEditing(true);
   };
 
   return (
@@ -47,16 +45,16 @@ export function TextEditor({
         <div className="space-x-2">
           {isEditing ? (
             <>
-              <Button onClick={onSave} variant="primary" icon={Save}>
+              <Button onClick={handleSave} variant="primary" icon={Save}>
                 Cохранить
               </Button>
-              <Button onClick={onCancel} icon={X}>
+              <Button onClick={handleCancel} icon={X}>
                 Отменить
               </Button>
             </>
           ) : (
             <>
-              <Button onClick={onEdit} icon={Edit2}>
+              <Button onClick={handleEditingStart} icon={Edit2}>
                 Редактировать
               </Button>
               <Button onClick={onSaveAsPDF} icon={Download}>
@@ -73,13 +71,13 @@ export function TextEditor({
         <Button
           onClick={handleCopy}
           size="sm"
-          className="absolute top-2 right-2 !p-2 !hover:scale-110"
+          className="absolute top-4 right-4 !p-2 !hover:scale-110"
           icon={isCopied ? Check : Copy}>
           Скопировать в буфер
         </Button>
         {isEditing ? (
           <textarea
-            value={editableText}
+            value={text}
             onChange={e => onEditableTextChange(e.target.value)}
             className="w-full h-full min-h-[200px] p-2 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border-2 border-blue-200 dark:border-blue-500/30 rounded focus:border-blue-400 dark:focus:border-blue-500 focus:ring focus:ring-blue-200 dark:focus:ring-blue-500/20 focus:ring-opacity-50 transition-all duration-200"
             style={{ height: 'calc(100% - 2rem)' }}
