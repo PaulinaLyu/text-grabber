@@ -1,4 +1,5 @@
 import { FileText } from 'lucide-react';
+import { LanguageSelector } from '../LanguageSelector';
 
 export const Header = () => {
   return (
@@ -14,6 +15,9 @@ export const Header = () => {
               Загрузите изображение для извлечения текста
             </p>
           </div>
+        </div>
+        <div className="flex items-center gap-3">
+          <LanguageSelector />
         </div>
       </div>
     </div>

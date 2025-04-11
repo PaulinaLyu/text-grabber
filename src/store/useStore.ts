@@ -6,6 +6,8 @@ interface StoreTypes {
   imageUrl: string;
   isProcessing: boolean;
   extractedText: string;
+  selectedLanguage: string;
+  setSelectedLanguage: (language: string) => void;
   setImageUrl: (url: string) => void;
   setIsProcessing: (isProcessing: boolean) => void;
   setExtractedText: (text: string) => void;
@@ -19,9 +21,11 @@ export const useStore = create<StoreTypes>((set, get) => ({
   imageUrl: '',
   extractedText: '',
   isProcessing: false,
+  selectedLanguage: 'rus',
   setImageUrl: url => set({ imageUrl: url }),
   setIsProcessing: isProcessing => set({ isProcessing }),
   setExtractedText: text => set({ extractedText: text }),
+  setSelectedLanguage: language => set({ selectedLanguage: language }),
 
   processImage: async () => {
     set({ isProcessing: true });
