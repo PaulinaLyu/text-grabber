@@ -1,3 +1,4 @@
 export { Header } from './Header';
-export { ImageUploader } from './ImageUploader';
-export { ImagePreview } from './ImagePreview';
+export { Button } from './Button';
+export { TextEditor } from './TextEditor';
+export { ImageUploadPreview } from './ImageUploadPreview';
