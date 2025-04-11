@@ -68,13 +68,14 @@ export function TextEditor({ text, onEditableTextChange, onSaveAsPDF, onSaveAsWo
         </div>
       </div>
       <div className="flex-1 bg-gray-50 dark:bg-gray-700 rounded p-4 relative overflow-hidden">
-        <Button
-          onClick={handleCopy}
-          size="sm"
-          className="absolute top-4 right-4 !p-2 !hover:scale-110"
-          icon={isCopied ? Check : Copy}>
-          Скопировать в буфер
-        </Button>
+        {!isEditing && (
+          <Button
+            onClick={handleCopy}
+            size="sm"
+            className="absolute top-4 right-4 !p-2 !hover:scale-110"
+            icon={isCopied ? Check : Copy}
+          />
+        )}
         {isEditing ? (
           <textarea
             value={text}

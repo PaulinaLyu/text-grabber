@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useStore } from '../store/useStore';
+import { useStore } from '@/store/useStore';
 
 export const useImageProcessing = () => {
   const { imageUrl, isProcessing, setImageUrl, setExtractedText, deleteImage } = useStore();
