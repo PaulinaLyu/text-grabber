@@ -1,10 +1,11 @@
-import { useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { ImagePlus, Trash2, Loader2 } from 'lucide-react';
 import { Button } from '../Button';
 
 interface ImageUploadPreviewProps {
   imageUrl: string;
   isProcessing: boolean;
+  maxSize?: number;
   onUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onDelete: () => void;
 }
@@ -14,8 +15,58 @@ export const ImageUploadPreview = ({
   isProcessing,
   onUpload,
   onDelete,
+  maxSize = 5 * 1024 * 1024,
 }: ImageUploadPreviewProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleDragEnter = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  }, []);
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
+
+  const validateFile = (file: File): boolean => {
+    setError(null);
+
+    if (!file.type.startsWith('image/')) {
+      setError('Пожалуйста загрузите сообщения');
+      return false;
+    }
+
+    if (file.size > maxSize) {
+      setError(`Размер файла должен быть менее ${maxSize / 1024 / 1024}MB`);
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragging(false);
+
+      const file = e.dataTransfer.files[0];
+      if (file && validateFile(file)) {
+        onUpload(e);
+      }
+    },
+    [onUpload, maxSize],
+  );
 
   const handleClick = () => {
     fileInputRef.current?.click();
@@ -24,10 +75,22 @@ export const ImageUploadPreview = ({
   if (!imageUrl) {
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-10rem)] animate-fade-in">
-        <label
+        <button
           onClick={handleClick}
-          className="flex flex-col items-center justify-center w-full max-w-2xl h-96 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg cursor-pointer bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-          <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={onUpload} />
+          className={`flex flex-col items-center justify-center w-full max-w-2xl h-96 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg cursor-pointer bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg ${
+            isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400 bg-gray-50'
+          }`}
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            className="opacity-0 absolute z-[-1]"
+            onChange={onUpload}
+          />
           <div className="flex flex-col items-center justify-center px-4 py-6">
             <ImagePlus className="w-16 h-16 mb-4 text-gray-400 dark:text-gray-500" />
             <p className="text-xl text-gray-500 dark:text-gray-400 mb-1">
@@ -35,7 +98,7 @@ export const ImageUploadPreview = ({
             </p>
             <p className="text-sm text-gray-400 dark:text-gray-500">Поддерживается PNG, JPG, JPEG</p>
           </div>
-        </label>
+        </button>
       </div>
     );
   }
@@ -64,6 +127,8 @@ export const ImageUploadPreview = ({
           <p className="text-sm">
             <span>Загрузи</span> или перетяни изображение
           </p>
+          <p className="mt-1 text-xs text-gray-500">Максимальный размер файла: {maxSize / 1024 / 1024}MB</p>
+          {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
         </div>
       </div>
 
