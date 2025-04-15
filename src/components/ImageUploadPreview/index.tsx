@@ -62,7 +62,17 @@ export const ImageUploadPreview = ({
 
       const file = e.dataTransfer.files[0];
       if (file && validateFile(file)) {
-        onUpload(e);
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.files = dataTransfer.files;
+
+        const event = {
+          target: input,
+        } as unknown as React.ChangeEvent<HTMLInputElement>;
+
+        onUpload(event);
       }
     },
     [onUpload, maxSize],
@@ -97,6 +107,8 @@ export const ImageUploadPreview = ({
               <span className="font-semibold">Загрузи</span> или перетяни изображение
             </p>
             <p className="text-sm text-gray-400 dark:text-gray-500">Поддерживается PNG, JPG, JPEG</p>
+            <p className="mt-1 text-xs text-gray-500">Максимальный размер файла: {maxSize / 1024 / 1024}MB</p>
+            {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
           </div>
         </button>
       </div>
