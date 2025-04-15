@@ -107,7 +107,7 @@ export const ImageUploadPreview = ({
               <span className="font-semibold">Загрузи</span> или перетяни изображение
             </p>
             <p className="text-sm text-gray-400 dark:text-gray-500">Поддерживается PNG, JPG, JPEG</p>
-            <p className="mt-1 text-xs text-gray-500">Максимальный размер файла: {maxSize / 1024 / 1024}MB</p>
+            <p className="mt-1 text-xs text-white">Максимальный размер файла: {maxSize / 1024 / 1024}MB</p>
             {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
           </div>
         </button>
@@ -126,7 +126,7 @@ export const ImageUploadPreview = ({
 
       <div
         className="relative flex-1 flex items-center justify-center border-2 border-dashed rounded-lg cursor-pointer overflow-hidden group min-h-[200px]
-          border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition"
+          border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 hover:bg-gray-600 transition"
         onClick={handleClick}>
         <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={onUpload} />
         <img
@@ -139,7 +139,7 @@ export const ImageUploadPreview = ({
           <p className="text-sm">
             <span>Загрузи</span> или перетяни изображение
           </p>
-          <p className="mt-1 text-xs text-gray-500">Максимальный размер файла: {maxSize / 1024 / 1024}MB</p>
+          <p className="mt-1 text-xs text-white">Максимальный размер файла: {maxSize / 1024 / 1024}MB</p>
           {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
         </div>
       </div>

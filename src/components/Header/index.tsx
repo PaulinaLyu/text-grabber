@@ -1,5 +1,5 @@
 import { FileText } from 'lucide-react';
-// import { LanguageSelector } from '../LanguageSelector';
+import { LanguageSelector } from '../LanguageSelector';
 import { ThemeToggle } from '../ThemeToggle';
 
 export const Header = () => {
@@ -18,7 +18,7 @@ export const Header = () => {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          {/* <LanguageSelector /> */}
+          <LanguageSelector />
           <ThemeToggle />
         </div>
       </div>
