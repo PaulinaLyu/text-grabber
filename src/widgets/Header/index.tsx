@@ -1,6 +1,6 @@
 import { FileText } from 'lucide-react';
-import { LanguageSelector } from '../LanguageSelector';
-import { ThemeToggle } from '../ThemeToggle';
+import { LanguageSelector } from '@/components';
+import { ThemeToggle } from '@/components';
 
 export const Header = () => {
   return (

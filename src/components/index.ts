@@ -1,5 +1,2 @@
-export { Header } from './Header';
-export { Button } from './Button';
-export { Select } from './Select';
-export { TextEditor } from './TextEditor';
-export { ImageUploadPreview } from './ImageUploadPreview';
+export { LanguageSelector } from './LanguageSelector';
+export { ThemeToggle } from './ThemeToggle';

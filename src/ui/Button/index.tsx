@@ -9,7 +9,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
 }
 
-export function Button({
+export const Button = ({
   variant = 'secondary',
   size = 'md',
   icon: Icon,
@@ -19,7 +19,7 @@ export function Button({
   className = '',
   disabled,
   ...props
-}: PropsWithChildren<ButtonProps>) {
+}: PropsWithChildren<ButtonProps>) => {
   const onlyIcon = !children;
   const isDisabled = disabled || isLoading;
 
@@ -80,4 +80,4 @@ export function Button({
       )}
     </button>
   );
-}
+};
