@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import { ImagePlus, Trash2, Loader2 } from 'lucide-react';
-import { Button } from '../Button';
+import { Button } from '@/ui';
 
 interface ImageUploadPreviewProps {
   imageUrl: string;

@@ -1,6 +1,6 @@
 import { Languages } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
-import { Select } from '@/components';
+import { Select } from '@/ui';
 
 export const LanguageSelector = () => {
   const { selectedLanguage, changeLanguage, languages } = useLanguage();

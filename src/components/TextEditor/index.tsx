@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FileText, Download, Edit2, Save, X, Copy, Check } from 'lucide-react';
-import { Button } from '../Button';
+import { Button } from '@/ui';
 
 interface TextEditorProps {
   text: string;
