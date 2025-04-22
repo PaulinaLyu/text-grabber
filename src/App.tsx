@@ -1,6 +1,5 @@
-import { Header, TextEditor } from '@/components';
-import { ImageUploadPreview } from '@/components/ImageUploadPreview';
-import { useImageProcessing } from './hooks/useImageProcessing';
+import { Header, TextEditor, ImageUploadPreview } from '@/widgets';
+import { useImageProcessing } from '@/hooks/useImageProcessing';
 import { useCallback } from 'react';
 import { useStore } from '@/store/useStore';
 

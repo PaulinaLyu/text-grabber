@@ -1,3 +1,2 @@
-export { Header } from './Header';
-export { TextEditor } from './TextEditor';
-export { ImageUploadPreview } from './ImageUploadPreview';
+export { LanguageSelector } from './LanguageSelector';
+export { ThemeToggle } from './ThemeToggle';

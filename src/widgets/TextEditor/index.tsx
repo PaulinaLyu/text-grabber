@@ -9,7 +9,7 @@ interface TextEditorProps {
   onSaveAsWord: () => void;
 }
 
-export function TextEditor({ text, onEditableTextChange, onSaveAsPDF, onSaveAsWord }: TextEditorProps) {
+export const TextEditor = ({ text, onEditableTextChange, onSaveAsPDF, onSaveAsWord }: TextEditorProps) => {
   const [isCopied, setIsCopied] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -91,4 +91,4 @@ export function TextEditor({ text, onEditableTextChange, onSaveAsPDF, onSaveAsWo
       </div>
     </div>
   );
-}
+};
