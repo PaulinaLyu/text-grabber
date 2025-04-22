@@ -25,7 +25,7 @@ export const useStore = create<StoreTypes>()(
     imageUrl: '',
     extractedText: '',
     isProcessing: false,
-    selectedLanguage: 'rus',
+    selectedLanguage: 'eng',
     isDark:
       typeof window !== 'undefined'
         ? localStorage.getItem('theme') === 'dark' ||
@@ -38,8 +38,40 @@ export const useStore = create<StoreTypes>()(
     setIsDark: isDark => set({ isDark }),
 
     processImage: async () => {
-      set({ isProcessing: true });
-      set({ isProcessing: false });
+      const { imageUrl, selectedLanguage, setExtractedText, setIsProcessing } = get();
+
+      if (!imageUrl) return;
+
+      try {
+        setIsProcessing(true);
+
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        const file = new File([blob], 'image.png', { type: blob.type });
+
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('lang', selectedLanguage);
+
+        const res = await fetch('http://localhost:8000/text-from-image/', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          setExtractedText(data.text);
+        } else {
+          console.error(data.error || 'Unknown error');
+          setExtractedText('Ошибка при обработке изображения');
+        }
+      } catch (err) {
+        console.error(err);
+        setExtractedText('Произошла ошибка');
+      } finally {
+        setIsProcessing(false);
+      }
     },
 
     deleteImage: () => {
